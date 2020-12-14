@@ -1,0 +1,127 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(new MaterialApp(
+    debugShowCheckedModeBanner: false,
+
+    home: new HomePage(),
+    //Mendefinisikan Routing yang mengatur halaman app
+    routes: {
+      '/programmatematika': (BuildContext context) => ProgramMatematika(),
+      '/listview': (BuildContext context) => ListView(),
+    },
+  ));
+}
+
+class HomePage extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text("Data Mahasiswa"),  
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.receipt),
+                tooltip: 'Program Matematika',
+                onPressed: () {
+                  Navigator.of(context).pushNamed("/programmatematika");
+                }),
+            IconButton(
+                icon: Icon(Icons.cloud_queue),
+                tooltip: 'ListView',
+                onPressed: () {
+                  Navigator.of(context).pushNamed("/listview");
+                }),
+          ],
+        ),
+        body: new Column(
+    children: <Widget>[
+      const Divider(
+        height: 1.0,
+      ),
+      new Text('Data Mahasiswa', style: TextStyle(fontSize: 32)),
+      new ListTile(
+        leading: const Icon(Icons.person),
+        title: const Text('Irham Ramadhan Lubis'),
+        subtitle: const Text('Nama Mahasiswa'),
+      ),
+      new ListTile(
+        leading: const Icon(Icons.label),
+        title: const Text('Sistem Informasi / 5SIC7'),
+        subtitle: const Text('Jurusan / Kelas'),
+      ),
+      new ListTile(
+        leading: const Icon(Icons.mail),
+        title: const Text('irhamramadhanlubis@gmail.com'),
+        subtitle: const Text('Email'),
+      )
+    ],
+  ),
+);
+  }
+}
+
+
+class ProgramMatematika extends StatefulWidget {
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<ProgramMatematika> {
+  final txtnama = TextEditingController();
+  final txttahunlahir = TextEditingController();
+
+
+  String hasil = '';
+
+  onHitung() {
+    setState(() {
+      var usia = 2020 - int.parse(txttahunlahir.text);
+      hasil = "${txtnama.text} berusia $usia tahun ";
+    });
+  }
+  
+  Widget build(BuildContext context) {
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text("Program Matematika"),        
+        ),
+      
+        body: Center(
+                child: Column(
+        children: <Widget>[
+          TextField(
+            controller: txtnama,
+            decoration: new InputDecoration(
+              labelText: "Nama Mahasiswa",
+            ),
+          ),
+          TextField(
+            controller: txttahunlahir,
+            decoration: new InputDecoration(
+              labelText: "Tahun Lahir",
+            ),
+          ),
+          RaisedButton(
+            child: Text("Hitung"),
+            onPressed: onHitung,
+          ),
+          Text(hasil),
+        ],
+      ),
+          ),
+        
+     );
+  }
+}
+
+ 
+    class ListView extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return new Scaffold(
+        appBar: new AppBar(
+          title: new Text("ListView"),        
+        ),
+        body: Center(
+          child: Text('ListView', style: TextStyle(fontSize: 32)),
+        ));
+  }
+    }
